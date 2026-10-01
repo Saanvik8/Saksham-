@@ -1,131 +1,291 @@
-# Saksham — AI-Powered Interview Simulation Platform
+# SAKSHAM (PSWB01 — Web-Based Selector-Applicant Simulation Software)
 
-> **DRDO Recruitment & Assessment Centre (RAC)**
-> Ministry of Defence, Government of India
-
-## 📖 What Is This?
-
-A web-based interview simulation platform where **AI co-pilots the interviewer** — generating relevant questions from the candidate's resume, grading answers in real-time, tracking facial expressions, and producing a **5-Axis Competency Score** — all while the candidate sees nothing but a clean video conference screen.
-
-## 👥 Team Structure
-
-| Person | Role | README | What They Build |
-|--------|------|--------|----------------|
-| **Person 1** | Frontend A | [README_FRONTEND_A.md](docs/README_FRONTEND_A.md) | Landing page, login, dashboard, setup, reports, routing |
-| **Person 2** | Frontend B | [README_FRONTEND_B.md](docs/README_FRONTEND_B.md) | Board room (video conference), AI panel, transcript, expression overlay |
-| **Person 3** | PPT & Docs | [README_PPT.md](docs/README_PPT.md) | Presentation, demo video, testing, documentation |
-| **Person 4** | Backend | [README_BACKEND.md](docs/README_BACKEND.md) | All APIs, Gemini AI integration, server |
-
-### 📡 API Contract
-All frontend ↔ backend communication formats are documented in:
-👉 [**API_CONTRACT.md**](docs/API_CONTRACT.md)
-
-> **Rule**: Frontend sends EXACTLY the JSON shown. Backend returns EXACTLY the JSON shown. No surprises.
+> **"AI-assisted interview intelligence, with the expert always in control."**
+>
+> SAKSHAM transforms a conventional interview into a **structured, adaptive, AI-assisted board-room simulation** by analyzing candidate responses, identifying knowledge gaps, generating contextual follow-ups, and providing a structured report for expert review.
 
 ---
 
-## 🚀 Quick Start
+## 🛡️ What is SAKSHAM?
 
-### Frontend (Person 1 & 2)
-```bash
-npm install
-npm run dev
-# Runs on http://localhost:5173
+SAKSHAM is a web-based defence interview simulation platform designed around a **Human-in-the-Loop AI assessment model**.
+
+Instead of replacing the interviewer, SAKSHAM provides AI-generated insights alongside the live interview:
+
+```text
+Candidate
+    ⟶ Live Interview
+    ⟶ Answer Analysis
+    ⟶ Knowledge Gap Detection
+    ⟶ Adaptive Follow-Up
+    ⟶ AI Assessment
+    ⟶ Expert Review
+    ⟶ Final Interview Report
 ```
 
-### Backend (Person 4)
-```bash
-cd server
-npm install
-node server.js
-# Runs on http://localhost:5000
+The interview is divided into three structured phases:
+
+* **Ice Breaking**
+* **Technical**
+* **Managerial**
+
+---
+
+## 🌟 Key Differentiators
+
+1. **AI-Assisted, Not AI-Decided**: AI provides assessment insights, while the expert retains control over the final evaluation and certification.
+
+2. **Real-Time Answer Intelligence**: Candidate responses are evaluated for **relevance, technical accuracy, and completeness**, with supporting observations and evidence.
+
+3. **Adaptive Follow-Up Engine**: Identifies missing concepts and generates contextual follow-up questions based on the candidate's previous response and interview history.
+
+4. **Live Interview Intelligence Panel**: During the interview, the expert can view the candidate video, transcript, AI observations, answer analysis, and suggested follow-ups without leaving the interview screen.
+
+5. **Expression & Behaviour Indicators**: Provides supporting indicators such as confidence, nervousness, engagement, eye contact, and dominant emotion.
+
+6. **Separated AI & Expert Assessment**: AI-generated scores and observations are stored separately from the expert's score, verdict, and remarks.
+
+7. **Structured Interview Report**: Converts the complete interview into a clean report containing candidate details, phase-wise assessment, competency analysis, strengths, improvement areas, and question-level evaluation.
+
+---
+
+## 🏗️ Architecture & AI Pipeline
+
+```text
+Candidate / Expert
+        │
+        ▼
+React Interview Interface
+        │
+        ▼
+Node.js + Express REST API
+        │
+        ├───────────────┐
+        ▼               ▼
+   Groq API          MongoDB
+        │               │
+        ▼               ▼
+Answer Analysis     Session / QnA
+        │            History / Reports
+        ▼
+Knowledge Gap Detection
+        │
+        ▼
+Adaptive Follow-Up Generation
+        │
+        ▼
+AI Assessment
+        │
+        ▼
+Expert Review
+        │
+        ▼
+Final Interview Report
+```
+
+### AI Processing
+
+The AI layer uses the **Groq API** to assist with:
+
+* Candidate answer evaluation
+* Relevance, accuracy and completeness analysis
+* Missing concept identification
+* Follow-up question generation
+* Interview conversation analysis
+
+The AI output is treated as **decision-support information**, while the final assessment remains with the authorized expert.
+
+---
+
+## 📊 Assessment Model
+
+### AI Assessment
+
+```text
+Answer
+ ├── Relevance %
+ ├── Technical Accuracy %
+ ├── Completeness %
+ ├── Observation
+ ├── Evidence
+ ├── Missing Concepts
+ └── Suggested Follow-Up Questions
+```
+
+### Expert Assessment
+
+```text
+AI Assessment
+      ↓
+Expert Review
+ ├── Accept
+ ├── Modify
+ └── Add Remarks
+      ↓
+Final Certification
+```
+
+The default interview status is:
+
+```text
+PENDING_EXPERT_REVIEW
 ```
 
 ---
 
-## 🔗 How Everything Connects
+## 🛠️ Tech Stack
 
-```
-Person 1 (Pages)          Person 2 (Board Room)
-     │                           │
-     │   React Router            │  Webcam + AI Panel
-     │   ───────────►            │
-     │   /interview/expert/      │
-     │   /interview/candidate/   │
-     │                           │
-     └───────────┬───────────────┘
-                 │
-                 │  HTTP API calls
-                 ▼
-          Person 4 (Backend)
-                 │
-                 │  Gemini API calls
-                 ▼
-           Google Gemini AI
+| Layer           | Technologies                                  |
+| --------------- | --------------------------------------------- |
+| **Frontend**    | React.js, React Router, JavaScript, HTML, CSS |
+| **Backend**     | Node.js, Express.js, REST APIs                |
+| **AI**          | Groq API                                      |
+| **Database**    | MongoDB, Mongoose                             |
+| **Development** | Git, GitHub, Claude Code, Codex, Antigravity  |
 
-     Person 3 (PPT) ← Takes screenshots of everything
+---
+
+## 🔌 Core API Endpoints
+
+### Grade Candidate Answer
+
+```http
+POST /api/interview/grade-answer
 ```
+
+Analyzes the candidate's response and returns scoring, observations, missing concepts and possible follow-up questions.
+
+### Generate Follow-Up
+
+```http
+POST /api/interview/generate-followup
+```
+
+Generates contextual follow-up questions using the interview conversation history.
+
+### Analyze Expression
+
+```http
+POST /api/interview/analyze-expression
+```
+
+Processes expression-related indicators including confidence, nervousness, engagement and eye contact.
+
+### Generate Report
+
+```http
+POST /api/interview/generate-report
+```
+
+Generates the structured post-interview assessment report.
 
 ---
 
 ## 📁 Project Structure
 
-```
-INT HACKATHON/
-├── README.md                    ← this file
-├── docs/
-│   ├── API_CONTRACT.md          ← frontend ↔ backend JSON formats
-│   ├── README_FRONTEND_A.md     ← Person 1's tasks
-│   ├── README_FRONTEND_B.md     ← Person 2's tasks
-│   ├── README_PPT.md            ← Person 3's tasks
-│   └── README_BACKEND.md        ← Person 4's tasks
-├── src/                         ← frontend code (Person 1 & 2)
-│   ├── pages/
-│   ├── components/
-│   ├── services/
-│   ├── App.jsx
-│   └── index.css
-├── server/                      ← backend code (Person 4)
-│   ├── server.js
+```text
+SAKSHAM/
+│
+├── frontend-boardroom/
+│   └── src/
+│       ├── InterviewRoomExpert.jsx
+│       ├── InterviewRoomCandidate.jsx
+│       ├── AIPanel.jsx
+│       ├── VideoFeed.jsx
+│       ├── ExpressionOverlay.jsx
+│       ├── PhaseBar.jsx
+│       ├── InterviewControls.jsx
+│       └── TranscriptPanel.jsx
+│
+├── server/
 │   ├── routes/
-│   ├── services/
-│   └── data/
-├── package.json
-└── vite.config.js
+│   │   ├── interview.js
+│   │   └── auth.js
+│   ├── models/
+│   │   ├── Session.js
+│   │   └── Report.js
+│   ├── geminiService.js
+│   └── server.js
+│
+└── README.md
 ```
 
 ---
 
-## 📋 Integration Checklist
+## Environment Configuration
 
-Before final demo, verify these cross-team connections:
+### Backend — `server/.env`
 
-- [ ] Frontend A → Backend: Expert login works
-- [ ] Frontend A → Backend: Candidate join works
-- [ ] Frontend A → Backend: Interview create returns question bank
-- [ ] Frontend A → Frontend B: Redirect to board room works (sessionId in localStorage)
-- [ ] Frontend B → Backend: Grade answer returns scores
-- [ ] Frontend B → Backend: Expression analysis returns data
-- [ ] Frontend B → Backend: Generate report returns 5-axis scores
-- [ ] Frontend B → Frontend A: Report data passed to report view page
-- [ ] PPT: All screenshots captured from latest build
-- [ ] PPT: Demo video recorded
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+GROQ_API_KEY=your_groq_api_key
+```
+
+> **Never commit API keys or `.env` files to GitHub.**
 
 ---
 
-## 🎨 Design System
+## 🚀 Running Locally
 
-Use these consistently across ALL pages:
+### 1. Backend
 
-| Token | Value |
-|-------|-------|
-| Background | `#0a1628` (dark navy) |
-| Card Background | `rgba(255, 255, 255, 0.05)` (glassmorphism) |
-| Primary Accent | `#c9a84c` (gold) |
-| Text Primary | `#ffffff` |
-| Text Secondary | `#94a3b8` |
-| Success | `#22c55e` |
-| Error | `#ef4444` |
-| Font | `'Inter', 'Outfit', sans-serif` |
-| Border Radius | `12px` (cards), `8px` (buttons) |
-| Tricolor Top Bar | `#FF9933, #FFFFFF, #138808` |
+```bash
+cd server
+npm install
+npm run dev
+```
+
+### 2. Frontend
+
+```bash
+cd frontend-boardroom
+npm install
+npm run dev
+```
+
+The frontend and backend URLs will be displayed in the terminal after starting the development servers.
+
+---
+
+## 🎯 Interview Workflow
+
+1. **Candidate joins** using the interview code.
+2. **Expert starts** the board-room interview.
+3. Interview progresses through **Ice Breaking → Technical → Managerial** phases.
+4. Candidate answers are captured and analyzed.
+5. AI displays **relevance, accuracy, completeness, observations and missing concepts**.
+6. The system generates **adaptive follow-up questions**.
+7. Expression indicators provide additional interview observations.
+8. AI generates the overall assessment.
+9. Expert **accepts, modifies, or comments** on the assessment.
+10. The system generates the **final structured interview report**.
+
+---
+
+##  Known Limitations
+
+* AI-generated assessments are intended as decision-support and require expert review.
+* Expression indicators can be affected by camera quality, lighting and environmental conditions.
+* AI responses depend on the availability and limits of the configured AI provider.
+* The current implementation is a hackathon prototype and is not an official recruitment or defence selection system.
+
+---
+
+## 🔮 Future Scope
+
+* Real-time speech-to-text improvements
+* More advanced multimodal candidate analysis
+* Role-specific question banks
+* Interview analytics and candidate history
+* Additional AI model providers
+* Secure institutional deployment
+* Multilingual interview support
+
+---
+
+## 👥 Project
+
+**SAKSHAM — Defence Interview Intelligence Platform**
+
+Built as a hackathon project to explore how **AI-assisted analysis can support structured defence-style interviews while keeping human experts in control of the final assessment.**
